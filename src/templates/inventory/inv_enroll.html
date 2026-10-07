@@ -1,0 +1,43 @@
+{%extends "base.html"%}
+{%block title %} Enroll items {%endblock%}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/form.css')}}">
+{%endblock%}
+
+{%block content%}
+<br> 
+  <section>
+    <form action="{{url_for('inventory.enroll')}}" method="post" id="trans-form" >
+        <fieldset>
+        <legend>Enroll new Item</legend>
+         <div id="item-cont">
+        <div class="item-entry">
+        <label for="item_id" >Item ID:</label>
+        <input class="credentials" required name="id" autocomplete="off" id="item_id" value="{{id}}">
+        {% if error_id%}
+        <p class="status_error"><b>{{error_id}}</b></p>
+         {%endif%}
+        <label for="item_name">Item Name:</label>
+        <input class="credentials"   name="item_name" required autocomplete="off" id="item_name" value="{{item_name}}">
+        {% if error_name%}
+        <p class="status_error"><b>{{ error_name}}</b></p>
+        {%endif%}
+        <label for="item_cost" >Cost:</label>
+        <input class="credentials" type="number"  name="unit_cost" required autocomplete="off" id="item_cost" min="0" step="0.01" value="{{unit_cost}}">
+        <label for="unit_type">Unit type:</label>
+        <input class="credentials"   name="unit_type" required autocomplete="off" id="item_type" value="{{unit_type}}">
+        <label for="select">UACS Object:</label>
+        <select id="uacs_code" name="uacs_code" >
+            <option value="5020301000">Stuffs</option>
+            <option value="5020399000">Other Stuffs</option>
+            <option value="5020302000">Electric Wizardry</option>
+
+        </select>
+        <br>
+        <button type="submit" >Someter ya!</button>
+        </div>
+        </div>
+        </fieldset>
+    </form>
+</section>
+{% endblock%}

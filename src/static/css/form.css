@@ -1,0 +1,194 @@
+/* Forms setting */
+
+fieldset{
+    margin: 2em 0;
+    padding:  1em 2em;
+    border: solid 2px #007400;
+    border-radius: 6px;
+    margin: auto;
+}
+
+label{
+    display: block;
+    margin-top: 1em;
+}
+
+label:first-of-type{
+    margin-top: 0
+}
+
+legend{
+    font-size: 1.25em;
+    padding: 0 0.25em;
+}
+
+
+input[type="submit"]{
+    padding: 1em 1em;
+    border-radius: 5px;
+    background-color: #007400;
+    color:aliceblue;
+    font-size: 1em;
+    max-width: 50em;
+}
+
+.status_error b{
+    color: red;
+}
+
+.status_error {
+    font-size: .7em;
+}
+
+
+
+/* Better form adjustment */
+
+
+
+@media(max-width:600px){
+    .item-fields{
+        grid-template-columns: 1fr;
+    }
+}
+
+#trans-form{
+    width: min(700px,93%);
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px hsla(0, 3%, 23%, 0.37);
+
+}
+
+.item-entry{
+    display: block;
+    margin-bottom: 6px;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    border: 1px solid #ccc;
+    padding: 30px;
+    border-radius: 7px;
+}
+
+.item-entry input,select{
+    width: 100%;
+    padding: 11px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 7px;
+
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.item-entry input:focus{
+    border-color: #4f7cff;
+    box-shadow: 0 0 0 3px rgba(79,124,255,0.12)
+}
+
+.autocomplete{
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.remove-item{
+    margin-top: 12px;
+    border: none;
+    background: transparent;
+    color: #d44;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.remove-item:hover{
+    text-decoration: underline;
+}
+
+#add-item{
+    width: 100%;
+    padding: 12px;
+    border: 1px dashed #aaa;
+    border-radius: 8px;
+    background: transparent;
+    color: #555;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+#add-item:hover{
+    background: rgb(176, 222, 154);
+}
+
+
+.trans-info input{
+    width: 100%;
+    padding: 11px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 7px;
+
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    margin-bottom: 6px;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+}
+
+button[type="submit"]{
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+
+    border: none;
+    border-radius: 8px;
+    background:#007400;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+button[type="submit"]:hover{
+    background:  #6CCE42;
+}
+
+.item-fields{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 12px;
+}
+
+/* For autocomplete part */
+
+.autocomplete{
+    position: relative;
+}
+
+.suggestions{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background: azure;
+    border: 1px solid #ccc;
+
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+}
+
+.suggestion{
+    padding: 10px;
+    cursor: pointer;
+}
+.suggestion:hover{
+    background: #96eca7;
+}
+

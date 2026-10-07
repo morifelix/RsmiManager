@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title %}Base{%endblock%}</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/base.css')}}">
+    {%block style%}{%endblock%}
+    <link rel="icon" type="icon" href="{{url_for('static', filename='media/Personal_2.ico')}}">
+</head>
+<body>
+     <nav class="navbar">
+        <div class="logo"><img src="{{url_for('static',filename='media/Personal_2.ico')}}" height="50px"> </div>
+        <ul class="nav-links">
+            <li><a href="{{url_for('home.home')}}">Home</a></li>
+            <li><a href="{{url_for('inventory.home')}}">Inventory</a></li>
+            <li><a href="{{url_for('transactions.transactions')}}">Transactions</a></li>
+            <li><a href="logout">Log out</a></li>
+        </ul>
+    </nav>
+<br>
+
+{%block content%}
+{% endblock %}
+
+{% with messages =get_flashed_messages(with_categories=true)%}
+
+{% for cat, mes in messages %}
+
+<div id="flash-message"
+    data-message="{{mes}}"
+    data-category="{{cat}}">
+</div>
+
+{%endfor%}
+{%endwith%}
+
+<div id="toast" class="toast">
+<span id="toast-icon">🤭</span>
+<span id="toast-message">TESTING</span>
+</div>
+</body>
+
+
+<script>
+    function categoryIcons(type){
+        switch(type){
+            case "good":
+                return "✅"
+            case "bad":
+                return "❌"
+            case "warn":
+                return "⚠️"
+            default:
+                return "ℹ️"
+        }
+    }
+
+
+    function showToast(category,message){
+        const toast=document.querySelector("#toast");
+        const toastIcon=document.querySelector("#toast-icon");
+        const messageElement=document.querySelector("#toast-message");
+        messageElement.textContent= message;
+        toastIcon.textContent=categoryIcons(category);
+
+        toast.classList.add(category);
+        toast.classList.add("show");
+
+        setTimeout(()=>{
+            toast.classList.remove("show");
+        },3000)
+    };
+
+    const flash = document.querySelector("#flash-message");
+    if (flash){
+        showToast(flash.dataset.category,flash.dataset.message)
+    };
+</script>
+</html>

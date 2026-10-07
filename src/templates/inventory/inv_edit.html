@@ -1,0 +1,45 @@
+{%extends "base.html"%}
+{%block title %} Enroll items {%endblock%}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/form.css')}}">
+{%endblock%}
+
+{%block content%}
+
+  <section>
+    <form action="{{url_for('inventory.edit',id=item_id)}}" method="post" id="trans-form">
+        <fieldset>
+            <legend>Edit Item: "{{item_id}} -  {{item_name}}"</legend>
+        <div id="item-cont">
+        <div class="item-entry">
+        <label for="item_id" >Item ID:</label>
+        <input type="text" name="item_id" autocapitalize="characters" autocomplete="off" id="item_id" value="{{item_id}}" required>
+        {% if error_id%}
+        <p class="status_error"><b>{{error_id}}</b></p>
+         {%endif%}
+        <label for="item_name">Item Name:</label>
+        <input class="credentials"   name="item_name" required autocomplete="off" id="item_name" value="{{item_name}}" >
+        {% if error_name%}
+        <p class="status_error"><b>{{ error_name}}</b></p>
+        {%endif%}
+        <label for="item_cost" >Cost:</label>
+        <input class="credentials" type="number"  name="item_cost" required autocomplete="off" id="item_cost" min="0" step="0.01" value="{{item_cost}}">
+        <label for="unit_type">Unit type:</label>
+        <input class="credentials"   name="item_type" required autocomplete="off" id="item_type" value="{{item_type}}">
+        <label for="select">UACS Object:</label>
+        <select id="uacs_code" name="uacs_code" >
+            <option value="5020301000">Stuffs</option>
+            <option value="5020399000">Other Stuffs</option>
+            <option value="5020302000">Electric Wizardry</option>
+
+        </select>
+        <br>
+        <button type="submit">Update Item</button>
+        </div></div>
+    </form>
+    <form method="post"  onsubmit="return confirm('Are you sure you want to delete item?')" action="{{ url_for('inventory.delete',id=item_id)}}">
+        <button class="remove-item">Delete</button>
+    </form>
+        </fieldset>
+</section>
+{% endblock%}

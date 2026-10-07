@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!</title>
+    <link rel="icon" type="icon" href="{{url_for('static',filename='media/Personal_2.ico')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+</head>
+<body>
+    <form action="#" method="post" class="form">
+        <img src="{{url_for('static',filename='media/Personal_2.ico')}}" height="150px">
+        <h1>Welcome back!</h1>
+        <input class="credentials" name="username" placeholder="Username" required value="{{username}}">
+        <br>
+        <input class="credentials" name="password" type="password" placeholder="Password" required>
+        <br>
+        <input type="submit" >
+        <br>
+        <a href="">Don't have an account? Register!</a>
+        {% if error  %}
+        <p class="error"><b>{{ error }}</b></p>
+        {% endif %}
+
+    </form>
+    
+</body>
+</html>

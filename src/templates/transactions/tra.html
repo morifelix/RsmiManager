@@ -1,0 +1,74 @@
+{% extends "base.html"%}
+{%block title%} Transactions {% endblock%}
+
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/table.css')}}">
+{%endblock%}
+
+{%block content%}
+
+<div class="base-contents">
+    <h1>Transactions</h1>
+    <p>A transactions database is a system that groups multiple SQL operations into a single atomic, consistent, isolated, and durable (ACID) unit of work, ensuring that either all changes succeed or none do.
+What a Transaction Is
+A transaction is a logical unit of work containing one or more SQL statements. It guarantees that operations such as money transfers, inventory updates, or multi-step business logic execute safely and consistently. </p>
+
+    <div class="tab-toolbar">
+    <div class="filter-data">
+    <span class="search-icon">🔍</span>
+    <input type="search" id="search-items" placeholder="Search Items">
+    </div>
+    <form method="post">
+    <input type="month" name=buwan value="{{fecha}}"><button type="submit" class="btn-gen">Update Month</button>
+    </form>
+    
+    <a href="{{url_for('transactions.writer')}}">
+    <button class="btn-gen">Generate RIS</button></a>
+
+    <a href="{{url_for('transactions.newadd')}}">
+    <button class="enroll-button">Add Transactions</button></a>
+    </div>
+</div>
+<div class="scroll-table">
+<table>
+    <thead><tr>
+        <th>Item ID</th>
+        <th>Item</th>
+        <th>No. used</th>
+        <th>RIS Number</th>
+        <th>Cereal Number</th>
+        <th>Date</th>
+        <th>User</th>
+        <th>Timestamp</th>
+        <th>Action</th>
+    </tr></thead>
+    <tbody>
+        {% for mesa in lamesa %}
+        <tr>
+            <td>{{mesa.item_id}}</td>
+            <td>{{mesa.items.item_name}}</td>
+            <td >{{mesa.items_used}}</td>
+            <td >{{mesa.batch_no}}</td>
+            <td >{{mesa.serial_no}}</td>
+            <td >{{mesa.date_log.strftime("%d %b %Y")}}</td>
+            <td >{{mesa.users.username}}</td>
+            <td >{{mesa.timestamp.strftime("%d %b %Y at %H:%M:%S")}}</td>
+            <td><a href="{{url_for('transactions.edit',id=mesa.id)}}"><button class="btn-gen">Edit</button> </a> </td>
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+    
+</table>
+    {%if not lamesa%}
+        <h1>NO TRANSACTIONS FOUND </h1>
+    {%endif%}
+</div>
+
+ <script src="{{url_for('static',filename='js/search_table.js')}}">
+
+</script>>
+
+</script>
+
+{%endblock%}

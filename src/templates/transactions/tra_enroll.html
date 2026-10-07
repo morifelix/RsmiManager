@@ -1,0 +1,50 @@
+{% extends "base.html"%}
+
+{%block title%}Add Transactions {%endblock%}
+
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/form.css')}}">
+{%endblock%}
+
+{%block content%}
+
+<form id="trans-form"  method="post" >
+    <fieldset>
+    <legend>Add New Transactions</legend>
+    
+    <div id="item-cont">
+         <div class="trans-info">
+         <label>Date</label>
+        <input type="date" name="date" required>
+        </div>
+        <div class="item-entry">
+            
+            
+        <div class="item-fields">
+        <div class=" autocomplete">
+        <label for="item_id">Item ID
+            <input type="text" name="ids[]" required class="item_id" autocomplete="off">
+        </label>
+        <div class="suggestions"></div></div>
+        <div class=" autocomplete">
+        <label for="item_name">Name
+        <input type="text" required class="item_name" autocomplete="off">
+        </label>
+        <div class="suggestions"></div></div>
+        
+        <label for="quantity[]">Quantity
+        <input type="number" name="quantity[]" min="1" required autocomplete="off">
+        </label>
+        <button class="remove-item">Remove</button>
+        </div></div>
+    </div>
+    <button type="button" id="add-item">Add another item</button>
+    <button type="submit">Submit! xD</button>
+    </fieldset>
+</form>
+<script src="{{url_for('static',filename='js/add_entry.js')}}">
+</script>
+<script src="{{url_for('static',filename='js/item_suggestions.js')}}">
+</script>
+
+{%endblock%}

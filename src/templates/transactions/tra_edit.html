@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+{%block title %} Enroll items {%endblock%}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/form.css')}}">
+{%endblock%}
+
+{%block content%}
+<br> 
+  <section>
+    <form action="#" method="post" id="trans-form">
+        <fieldset>
+            <legend>Edit transaction</legend>
+        <div id="item-cont">
+        <div class="item-entry">
+        <label for="item_id" >Item ID:</label>
+
+        <div class=" autocomplete">
+        <input type="text" name="item_id" autocapitalize="characters" autocomplete="off" class="item_id" value="{{item_id}}" required>
+        <div class="suggestions"></div></div>
+        {% if error_id%}
+        <p class="status_error"><b>{{error_id}}</b></p>
+         {%endif%}
+         <div class=" autocomplete">
+        <label for="item_name">Item Name:</label>
+        <input type="text"   name="item_name" required autocomplete="off" class="item_name" value="{{item_name}}" >
+        <div class="suggestions"></div></div>
+        
+         <label for="quantity[]">Quantity
+        <input type="number" name="quantity[]" min="1" required autocomplete="off" value="{{quantity}}">
+        <label for="date" >Date:</label>
+        <input class="credentials" type="date"  name="date" required autocomplete="off" value="{{fecha}}" >
+        <label for="batch_no" >Batch Number</label>
+        <input type="text" pattern="\d{4}-\d{2}-\d{3}" name="batch_no" required autocomplete="off" value="{{ris_no}}">
+        <label for="serial_no">Serial Number</label>
+        <input type="text" pattern="\d{4}-\d{2}-\d{3}" name="serial_no" required autocomplete="off" value="{{serial_no}}">
+        <input type="hidden" value="{{tra_id}}">
+        
+        <br>
+        <button type="submit">Update</button>
+        </div></div>
+    </form>
+    <form method="post"  onsubmit="return confirm('Are you sure you want to delete item?')" action="{{ url_for('inventory.delete',id=item_id)}}">
+        <button class="remove-item">Delete</button>
+    </form>
+        </fieldset>
+</section>
+
+<script src="{{url_for('static',filename='js/item_suggestions.js')}}"></script>
+{% endblock%}

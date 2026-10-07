@@ -1,0 +1,58 @@
+{% extends "base.html"%}
+{%block title%}Inventory List {%endblock%}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/table.css')}}">
+{%endblock%}
+{%block content%}
+
+
+
+<div class="base-contents">
+    <h1>Inventory Items</h1>
+    <p>We have <b>{{total_items}} total number of items</b> in our database. A company’s inventory comprises the finished items, component parts, and raw materials that it either sells or uses in production. As a verb, inventory refers to the act of counting or listing items. As an accounting term, inventory is a current asset and represents the value of goods a company holds for sale or use. While having enough on hand is essential, excess inventory can become a liability. </p>
+    <div class="tab-toolbar">
+    <div class="filter-data">
+    <span class="search-icon">🔍</span>
+    <input type="search" id="search-items" placeholder="Search Items">
+    </div>
+   
+    <a href="{{url_for('inventory.enroll')}}">
+    <button class="enroll-button">Enroll New Item</button></a>
+</div></div>
+
+<div class="scroll-table">
+
+<table>
+    <thead><tr>
+        <th>Item ID</th>
+        <th>Item Name</th>
+        <th>Cost</th>
+        <th>Item Type</th>
+        <th>UACS Code</th>
+        <th>Action</th>
+    </tr></thead>
+    <tbody>
+        {% for mesa in lamesa %}
+        <tr>
+            <td>{{mesa.id}}</td>
+            <td>{{mesa.item_name}}</td>
+            <td >{{mesa.unit_cost}}</td>
+            <td >{{mesa.unit_type}}</td>
+            <td >{{mesa.uacs_code}}</td>
+            <td><a href="{{url_for('inventory.edit',id=mesa.id)}}"><button class="btn-gen">Edit</button> </a> </td>
+        </tr>
+        {% endfor %}
+        {%if not lamesa%}
+        <h1>No items found </h1>
+        {%endif%}
+        
+    </tbody>
+</table>
+</div>
+
+<script src="{{url_for('static',filename='js/search_table.js')}}">
+
+</script>
+
+{%endblock%}
+

@@ -1,0 +1,148 @@
+/* Table */
+
+
+.scroll-table{
+    max-width: 90%;
+    height: 80%;
+    margin: 40px auto;
+    align-content: center;
+}
+
+table{
+    padding: 10;
+    border: 1px solid black;
+    box-shadow: 0 2px 6px hsla(0, 3%, 23%, 0.37);
+    backdrop-filter: blur(5px);
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+    font-size: 0.9rem;
+    
+}
+
+table th,
+table td{
+    width: auto;
+    padding: 5px;
+    border-right:1px dashed black;
+    align-content: center;
+}
+
+table tr {
+    border-bottom: 1px solid black;
+}
+
+table th{
+    background-color: #6CCE42;
+    color: azure;
+    position: sticky;
+    top: 0;
+    padding: 13px 15px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+table td{
+    padding: 10px 10px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+
+
+/* Toobar settings */
+
+.tab-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab-toolbar  input[type="month"]{
+    cursor: pointer;
+    padding: 11px 14px 11px 40px;
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+
+    transition: border-color 0.15s,box-shadow 0.15s;
+}
+
+.tab-toolbar input[type="month"]:focus{
+border-color: #4f7cff;
+box-shadow: 0 0 0 3px rgba(79,124,255,0.12);
+}
+
+/* Search input */
+
+.filter-data{
+    position: relative;
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items:center;
+    max-width: 650px;
+}
+
+.filter-data  input[type="search"]{
+    cursor: pointer;
+    width: 100%;
+    padding: 11px 14px 11px 40px;
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+
+    transition: border-color 0.15s,box-shadow 0.15s;
+}
+
+.filter-data input[type="search"]:focus{
+border-color: #4f7cff;
+box-shadow: 0 0 0 3px rgba(79,124,255,0.12);
+}
+
+.search-icon{
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+}
+
+/* Buttons */
+
+.enroll-button{
+    padding: 11px 17px;
+
+    border-radius: 8px;
+    background: #007400;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: background 0.15s;
+
+}
+.enroll-button:hover{
+    background:  #06a506;
+}
+
+
+@media (max-width: 600px) {
+    .tab-toolbar{
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-data{
+        max-width: none;
+    }
+    .enroll-button{
+        text-align: center;
+    }
+
+}
