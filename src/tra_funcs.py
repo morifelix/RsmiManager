@@ -9,6 +9,7 @@ from . import db
 from sqlalchemy import select as SELECT
 from datetime import date,datetime
 from pathlib import Path
+from zipfile import ZipFile
 
 def month_setter(fecha,batch_max=False):
     """Dynamic query for the database of a selected month, returns an sequence or tuple. ADD MORE DETAILS LATER!
@@ -24,10 +25,13 @@ def month_setter(fecha,batch_max=False):
     lista=db.session.scalars(querying).all() if not batch_max else db.session.execute(querying2).one()
     return lista
 
-def batch_setter(fecha:datetime):
+def batch_setter(fecha:datetime)-> tuple:
     """
     Checks and set the latest RIS no and serial no.
     Args:
+        fecha (datetime): Date to check and compare to update the serial number.
+
+    Returns: (tuple) Returns Tuple of RIS NO, then SERIAL number.
     """
     tuig=fecha.year
     buwan=fecha.month
@@ -56,7 +60,7 @@ def batch_setter(fecha:datetime):
 
 def ris_sorter(dbf)->dict:
     """
-    This function is used to organize transactions and group simmilar dates to be processed for ris writer.
+    To organize transactions and group simmilar dates to be processed for ris writer.
     """
     transcactions={}
     for item in dbf:
@@ -68,7 +72,7 @@ def ris_sorter(dbf)->dict:
 
 def rsmiWriter(details:dict,lista:dict,output:str) -> None:
     """
-    This will create RIS documents by selected month.
+    This will create RIS documents by selected month and saves them to a target folder.
 
     Args:
         details (dict): A dictionary containing the vales for agency, fundcluster,supply officer, accountant.
@@ -76,22 +80,32 @@ def rsmiWriter(details:dict,lista:dict,output:str) -> None:
         output (str): The directory path that where the writer would save the documents.
     """
     saveFolder=Path(output)
-    temPlate=r"\static\media\Appendix_64.docx"
+    temPlate="src\\static\\media\\Appendix_64.docx"
     for key,vale in lista.items():
         doc=DocxTemplate(temPlate)
         items=[]
         curr_ris=None
         for i in vale:
-            fecha=i[7]
-            total_cost=Decimal(i[3]*i[4])
+            fecha=i.date_log
+            total_cost=Decimal(i.items_used*i.items.unit_cost)
             formated_tCost=total_cost.quantize(Decimal("0.00"))
-            record={"item_code":i[0],"item_name":i[1],"item_type":i[2],"item_used":i[3],"unit_cost":f"{i[4]:,.2f}","total_cost":f"{formated_tCost:,.2f}","object_code":i[5],"ris_no":"-do-" if i[6]==curr_ris else i[6]}
-            curr_ris=i[6]
+            record={"item_code":i.item_id,"item_name":i.items.item_name,"item_type":i.items.unit_type,"item_used":i.items_used,"unit_cost":f"{i.items.unit_cost:,.2f}","total_cost":f"{formated_tCost:,.2f}","object_code":i.items.uacs_code,"ris_no":"-do-" if i.batch_no==curr_ris else i.batch_no}
+            curr_ris=i.batch_no
             items.append(record)
-        context={"items":items,"serial_no":i[8],"date":fecha.strftime("%d %b %Y")}
+        context={"items":items,"serial_no":i.serial_no,"date":fecha.strftime("%d %b %Y")}
         context.update(details)
         doc.render(context)
         fileName=f"{key}_rsmi.docx"
         doc.save(saveFolder / fileName)
         print(f"Created {fileName} ^_^")
     print("Process Complete xD")
+
+
+def create_zip(folder,file_name):
+    folder=Path(folder)
+    zip_path= folder / f"{file_name}.zip"
+
+    with ZipFile(zip_path,"w") as zip_file:
+        for file in folder.glob("*.docx"):
+            zip_file.write(file,arcname=file.name)
+    return zip_path

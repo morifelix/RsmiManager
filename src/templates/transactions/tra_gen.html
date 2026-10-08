@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+
+{%block title%}Add Transactions {%endblock%}
+
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/form.css')}}">
+{%endblock%}
+
+{%block content%}
+
+<form id="trans-form"  method="post" >
+    <fieldset>
+    <legend>Add New Transactions</legend>
+    
+    
+    <button type="submit">Submit! xD</button>
+    </fieldset>
+</form>
+
+
+{%endblock%}

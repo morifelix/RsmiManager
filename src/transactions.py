@@ -1,8 +1,11 @@
-from flask import Blueprint,render_template,request,flash,jsonify,redirect,url_for
+from flask import Blueprint,render_template,request,flash,jsonify,redirect,url_for,send_file
 from .models import Items,Transactions
 from .tra_funcs import *
 from . import db
 from sqlalchemy import select as SELECT
+import tempfile
+from pathlib import Path
+
 
 
 from datetime import date,datetime
@@ -51,10 +54,19 @@ def edit(id):
     return render_template("tra_edit.html",**contents)
 
 
-@bp_transactions.route("/generate")
+@bp_transactions.route("/generate",methods=["GET","POST"])
 def writer():
-    print(ris_sorter(month_setter("2026-07")))
-    return "<H1>YELLOE THERE XD!!!</H1>"
+    temp_dir=Path(tempfile.mkdtemp())
+    lista=ris_sorter(month_setter("2026-07"))
+
+    if request.method =="POST":
+        rsmiWriter({},lista,temp_dir)
+        zip_path=create_zip(temp_dir,"test")
+
+        return send_file(zip_path,as_attachment=True,download_name="test.zip",mimetype="application/zip")
+
+        
+    return render_template("tra_gen.html",)
 
 
 
