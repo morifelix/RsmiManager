@@ -8,8 +8,7 @@ from sqlalchemy import func
 from . import db
 from sqlalchemy import select as SELECT
 from datetime import date,datetime
-from io import BytesIO
-
+from pathlib import Path
 
 def month_setter(fecha,batch_max=False):
     """Dynamic query for the database of a selected month, returns an sequence or tuple. ADD MORE DETAILS LATER!
@@ -67,11 +66,18 @@ def ris_sorter(dbf)->dict:
         transcactions[date].append(item)
     return transcactions
 
-def rsmiWriter(products:dict):
-    saveFolder=os.path.join(targetFolder,f"{tuig}_{buwan}")
+def rsmiWriter(details:dict,lista:dict,output:str) -> None:
+    """
+    This will create RIS documents by selected month.
+
+    Args:
+        details (dict): A dictionary containing the vales for agency, fundcluster,supply officer, accountant.
+        lista (dict): A dictionary organized into dates which should be processed and made by ris_sorter.
+        output (str): The directory path that where the writer would save the documents.
+    """
+    saveFolder=Path(output)
     temPlate=r"\static\media\Appendix_64.docx"
-    os.makedirs(saveFolder,exist_ok=True)
-    for key,vale in products.items():
+    for key,vale in lista.items():
         doc=DocxTemplate(temPlate)
         items=[]
         curr_ris=None
@@ -82,10 +88,10 @@ def rsmiWriter(products:dict):
             record={"item_code":i[0],"item_name":i[1],"item_type":i[2],"item_used":i[3],"unit_cost":f"{i[4]:,.2f}","total_cost":f"{formated_tCost:,.2f}","object_code":i[5],"ris_no":"-do-" if i[6]==curr_ris else i[6]}
             curr_ris=i[6]
             items.append(record)
-        context={"items":items,"serial_no":i[8],"name_supply":"Test I. Nguy","name_acc":"Jan D. Oah","date":fecha.strftime("%d %b %Y")}
+        context={"items":items,"serial_no":i[8],"date":fecha.strftime("%d %b %Y")}
+        context.update(details)
         doc.render(context)
         fileName=f"{key}_rsmi.docx"
-        doc.save(os.path.join(saveFolder,fileName))
-        # print("SAVE",key)
+        doc.save(saveFolder / fileName)
         print(f"Created {fileName} ^_^")
     print("Process Complete xD")
