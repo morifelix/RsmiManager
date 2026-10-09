@@ -13,7 +13,7 @@ from zipfile import ZipFile
 import json
 
 
-
+#TODO: Add comment here
 def default_names(filepath:str):
     try:
         with open(filepath,"r") as f:
@@ -119,9 +119,9 @@ def rsmiWriter(details:dict,lista:dict,output:str) -> None:
     print("Process Complete xD")
 
 
-def create_zip(folder,file_name):
+def create_zip(folder):
     folder=Path(folder)
-    zip_path= folder / f"{file_name}.zip"
+    zip_path= folder / "temp.zip"
 
     with ZipFile(zip_path,"w") as zip_file:
         for file in folder.glob("*.docx"):

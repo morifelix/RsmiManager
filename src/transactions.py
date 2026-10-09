@@ -61,13 +61,23 @@ def writer():
     temp_dir=Path(tempfile.mkdtemp())
     def_vals=default_names(default_names_json)
 
-    print(def_vals)
     if request.method =="POST":
-        lista=ris_sorter(month_setter("2026-07"))
-        rsmiWriter({},lista,temp_dir)
-        zip_path=create_zip(temp_dir,"test")
+        fecha=request.form.get("buwan")
+        names=dict(
+            agency_name=request.form.get("entity"),
+            fund_cluster=request.form.get("fund_cluster"),
+            name_supply=request.form.get("officer"),
+            name_acc=request.form.get("accounting"),
+        )
 
-        return send_file(zip_path,as_attachment=True,download_name="test.zip",mimetype="application/zip")
+        for key in names:
+            names[key]=names[key].upper()
+
+        lista=ris_sorter(month_setter(fecha))
+        rsmiWriter(names,lista,temp_dir)
+        zip_path=create_zip(temp_dir)
+
+        return send_file(zip_path,as_attachment=True,download_name=f"{fecha}_RSMI.zip",mimetype="application/zip")
 
     return render_template("tra_gen.html",**def_vals)
 
