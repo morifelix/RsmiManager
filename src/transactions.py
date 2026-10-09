@@ -10,6 +10,8 @@ from pathlib import Path
 
 from datetime import date,datetime
 
+#TODO: add comment here
+default_names_json="instance\\agency_names.json"
 
 today_now=date.today()
 
@@ -57,16 +59,17 @@ def edit(id):
 @bp_transactions.route("/generate",methods=["GET","POST"])
 def writer():
     temp_dir=Path(tempfile.mkdtemp())
-    lista=ris_sorter(month_setter("2026-07"))
+    def_vals=default_names(default_names_json)
 
+    print(def_vals)
     if request.method =="POST":
+        lista=ris_sorter(month_setter("2026-07"))
         rsmiWriter({},lista,temp_dir)
         zip_path=create_zip(temp_dir,"test")
 
         return send_file(zip_path,as_attachment=True,download_name="test.zip",mimetype="application/zip")
 
-        
-    return render_template("tra_gen.html",)
+    return render_template("tra_gen.html",**def_vals)
 
 
 

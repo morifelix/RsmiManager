@@ -10,6 +10,24 @@ from sqlalchemy import select as SELECT
 from datetime import date,datetime
 from pathlib import Path
 from zipfile import ZipFile
+import json
+
+
+
+def default_names(filepath:str):
+    try:
+        with open(filepath,"r") as f:
+            values =json.load(f)
+        return dict(values)
+    except:
+        values={
+            "entity":"Agency Name Here",
+            "fund_cluster":"Regular Funds",
+            "officer":"Cheezit U. Piattos",
+            "accounting":"Chippy H. Nova"
+                }
+        return values
+
 
 def month_setter(fecha,batch_max=False):
     """Dynamic query for the database of a selected month, returns an sequence or tuple. ADD MORE DETAILS LATER!
