@@ -10,10 +10,21 @@
 
 <form id="trans-form"  method="post" >
     <fieldset>
-    <legend>Add New Transactions</legend>
+    <div class="item-entry">
+        <legend>Generate Document</legend>
+        <label for="month">Please select a month</label>
+        <input type="month" name="month" required>
+        <label for="entity">Entity Name</label>
+        <input type="text" name="entity" value="{{entity}}" required>
+        <label for="fund_cluster">Fund Cluster</label>
+        <input type="text" name="fund_cluster" value="{{fund}}" required>
+        <label for="officer">Supply Officer Name</label>
+        <input type="text" name="officer" value="{{supply_officer}}" required>
+        <label for="accounting">Accounting Staff Name</label>
+        <input type="text" name="accounting" value="{{accounting}}" required>
     
-    
-    <button type="submit">Submit! xD</button>
+        <button type="submit">Generate RSMI</button>
+    </div>
     </fieldset>
 </form>
 
