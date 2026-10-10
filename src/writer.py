@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request,flash,send_file
+from flask import Blueprint,render_template,request,flash,send_file,url_for,redirect
 from .utils.tra_funcs import *
 from .utils.writer_funcs import *
 import tempfile
@@ -30,8 +30,21 @@ def writer():
         rsmiWriter(names,lista,temp_dir)
         zip_path=create_zip(temp_dir)
 
-        return send_file(zip_path,as_attachment=True,download_name=f"{fecha}_RSMI.zip",mimetype="application/zip")
+        if not lista:
+            flash(f"No trasaction found for {buwan(fecha)}!!","bad")
+            return render_template("gen.html",**def_vals,month_error=f"No transaction found on {buwan(fecha)}!",fecha=fecha)
+            
+        flash(f"Generated Document for {buwan(fecha)},yey!")
+
+        send_file(zip_path,as_attachment=True,download_name=f"{fecha}_RSMI.zip",mimetype="application/zip")
+    #TODO: add redirect
+        return redirect(url_for("/transactions"))
 
     return render_template("gen.html",**def_vals)
+
+
+def buwan(fecha:str)-> str:
+    fecha2=date.fromisoformat(fecha+"-01")
+    return fecha2.strftime("%B %Y")
 
 

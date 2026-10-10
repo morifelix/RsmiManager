@@ -13,7 +13,10 @@
     <div class="item-entry">
         <legend>Generate Document</legend>
         <label for="buwan">Please select a month</label>
-        <input type="month" name="buwan" required>
+        <input type="month" name="buwan" required value="{{fecha}}">
+        {%if month_error %}
+        <p class="status_error"><b> {{month_error}}</b></p>
+        {%endif%}
         <label for="entity">Entity Name</label>
         <input type="text" name="entity" value="{{entity}}" required>
         <label for="fund_cluster">Fund Cluster</label>
