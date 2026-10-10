@@ -16,10 +16,12 @@ def create_app():
     from .inventory import bp_inventory
     from .transactions import bp_transactions
     from .views import bp_home
+    from .writer import bp_writer
     
 
     app.register_blueprint(bp_inventory,url_prefix="/inventory")
     app.register_blueprint(bp_transactions,url_prefix="/transactions")
+    app.register_blueprint(bp_writer,url_prefix="/generate")
     app.register_blueprint(bp_auth)
     app.register_blueprint(bp_home)
 

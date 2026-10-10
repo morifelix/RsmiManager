@@ -1,17 +1,12 @@
-from flask import Blueprint,render_template,request,flash,jsonify,redirect,url_for,send_file
-from .models import Items,Transactions
-from .tra_funcs import *
+from flask import Blueprint,render_template,request,flash,redirect,url_for,jsonify
+from .utils.models import Items,Transactions
+from .utils.tra_funcs import *
 from . import db
 from sqlalchemy import select as SELECT
-import tempfile
-from pathlib import Path
-
-
 
 from datetime import date,datetime
 
-#TODO: add comment here
-default_names_json="instance\\agency_names.json"
+
 
 today_now=date.today()
 
@@ -56,32 +51,6 @@ def edit(id):
     return render_template("tra_edit.html",**contents)
 
 
-@bp_transactions.route("/generate",methods=["GET","POST"])
-def writer():
-    temp_dir=Path(tempfile.mkdtemp())
-    def_vals=default_names(default_names_json)
-
-    if request.method =="POST":
-        fecha=request.form.get("buwan")
-        names=dict(
-            agency_name=request.form.get("entity"),
-            fund_cluster=request.form.get("fund_cluster"),
-            name_supply=request.form.get("officer"),
-            name_acc=request.form.get("accounting"),
-        )
-
-        for key in names:
-            names[key]=names[key].upper()
-
-        lista=ris_sorter(month_setter(fecha))
-        rsmiWriter(names,lista,temp_dir)
-        zip_path=create_zip(temp_dir)
-
-        return send_file(zip_path,as_attachment=True,download_name=f"{fecha}_RSMI.zip",mimetype="application/zip")
-
-    return render_template("tra_gen.html",**def_vals)
-
-
 
 #API
 @bp_transactions.route("/edit/api/items")
@@ -102,6 +71,8 @@ def search_items():
         }
         for item in item_list
     ])
+
+
 
 
 
